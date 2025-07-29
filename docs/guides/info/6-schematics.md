@@ -61,7 +61,7 @@ npm run start:prod:app-name
 
 ```bash
 # Creating NestJS-mod library
-./node_modules/.bin/nx g @nestjs-mod/schematics:library feature-name --buildable --publishable --directory=libs/feature-name --simpleName=true --projectNameAndRootFormat=as-provided --strict =true
+./node_modules/.bin/nx g @nestjs-mod/schematics:library --name=feature-name --buildable --publishable --directory=libs/feature-name --simpleName=true --strict=true --linter=eslint --unitTestRunner=jest
 ```
 
 > Example of the generated library: https://github.com/nestjs-mod/nestjs-mod-example/tree/master/libs/feature-name
