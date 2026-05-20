@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-ru-posts/fullstack/2024-09-15/ru" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.4.0">
+<title data-rh="true">ru | NestJS-mod</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://nestjs-mod.com/img/fon-nest.png"><meta data-rh="true" name="twitter:image" content="https://nestjs-mod.com/img/fon-nest.png"><meta data-rh="true" property="og:url" content="https://nestjs-mod.com/docs/ru-posts/fullstack/2024-09-15/ru"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="ru | NestJS-mod"><meta data-rh="true" name="description" content="[2024-09-15] Доступ к сайту на NestJS и Angular по доменному имени c SSL - сертификатом в Kubernetes через Ingress"><meta data-rh="true" property="og:description" content="[2024-09-15] Доступ к сайту на NestJS и Angular по доменному имени c SSL - сертификатом в Kubernetes через Ingress"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://nestjs-mod.com/docs/ru-posts/fullstack/2024-09-15/ru"><link data-rh="true" rel="alternate" href="https://nestjs-mod.com/docs/ru-posts/fullstack/2024-09-15/ru" hreflang="en"><link data-rh="true" rel="alternate" href="https://nestjs-mod.com/docs/ru-posts/fullstack/2024-09-15/ru" hreflang="x-default"><link rel="preconnect" href="https://mc.yandex.ru">
+<script>!function(e,t,a,c,n,r,i){e[n]=e[n]||function(){(e[n].a=e[n].a||[]).push(arguments)},e[n].l=1*new Date,r=t.createElement(a),i=t.getElementsByTagName(a)[0],r.async=1,r.src="https://mc.yandex.ru/metrika/tag.js",i.parentNode.insertBefore(r,i)}(window,document,"script",0,"ym"),ym(98948842,"init",{defer:!0,clickmap:!0,trackLinks:!0,accurateTrackBounce:!0,webvisor:!0,ecommerce:!1,trackHash:!0})</script>
+<noscript>
+                            <div><img src="https://mc.yandex.ru/watch/98948842" style="position:absolute; left:-9999px;" alt=""></div>
+                        </noscript><link rel="stylesheet" href="/assets/css/styles.4fd952a5.css">
+<script src="/assets/js/runtime~main.da83a192.js" defer="defer"></script>
+<script src="/assets/js/main.0eaa1353.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo.svg" alt="NestJS-mod" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo.svg" alt="NestJS-mod" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">NestJS-mod</b></a><a class="navbar__item navbar__link" href="/docs/guides/introduction">Docs</a><a class="navbar__item navbar__link" href="/docs/category/common">Packages</a><a class="navbar__item navbar__link" href="/docs/category/fullstack">Posts</a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/docs/category/fullstack-1">Посты</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/nestjs-mod" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="Switch between dark and light mode (currently light mode)" aria-label="Switch between dark and light mode (currently light mode)" aria-live="polite"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"><div class="navbar__search searchBarContainer_NW3z" dir="ltr"><input placeholder="Search" aria-label="Search" class="navbar__search-input"><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/docs/category/fullstack-1">Fullstack</a><button aria-label="Collapse sidebar category &#x27;Fullstack&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-08-08/ru">2024-08-08</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-08-09/ru">2024-08-09</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-08-11/ru">2024-08-11</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-08-13/ru">2024-08-13</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-08-14/ru">2024-08-14</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-08-14-update-nestjs-mod-libs/ru">2024-08-14-update-nestjs-mod-libs</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-08-20/ru">2024-08-20</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-08-22/ru">2024-08-22</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-08-26/ru">2024-08-26</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-09-08/ru">2024-09-08</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-09-13/ru">2024-09-13</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" tabindex="0" href="/docs/ru-posts/fullstack/2024-09-15/ru">2024-09-15</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/docs/ru-posts/fullstack/2024-09-15/ru">ru</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-09-16/ru">2024-09-16</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-09-17/ru">2024-09-17</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-10-06/ru">2024-10-06</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-10-25/ru">2024-10-25</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-11-08/ru">2024-11-08</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-11-15/ru">2024-11-15</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-11-20/ru">2024-11-20</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-11-21/ru">2024-11-21</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-11-24/ru">2024-11-24</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-12-03/ru">2024-12-03</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-12-12/ru">2024-12-12</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-12-16/ru">2024-12-16</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2024-12-29/ru">2024-12-29</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/ru-posts/fullstack/2025-02-12/ru">2025-02-12</a></div></li></ul></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/docs/category/fullstack-1"><span itemprop="name">Fullstack</span></a><meta itemprop="position" content="1"></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">2024-09-15</span><meta itemprop="position" content="2"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">ru</span><meta itemprop="position" content="3"></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>ru</h1></header><h2 id="2024-09-15-доступ-к-сайту-на-nestjs-и-angular-по-доменному-имени-c-ssl---сертификатом-в-kubernetes-через-ingress">[2024-09-15] Доступ к сайту на NestJS и Angular по доменному имени c SSL - сертификатом в Kubernetes через Ingress</h2>
+<p>Предыдущая статья: <a href="https://habr.com/ru/articles/843332/">Установка Kubernetes через MicroK8s и настройка деплоя NestJS и Angular приложений</a></p>
+<p>В Kubernetes очень легко настраивается работа с SSL, это наверное одна из главных причин почему я и начал им пользоваться, в этой статье я опишу простой сценарий его подключения.</p>
+<h3 id="1-установка-менеджера-сертификатов-на-выделенный-сервер">1. Установка менеджера сертификатов на выделенный сервер</h3>
+<p>Подключаемся к нашему серверу по SSH и включаем cert-manager плагин у MicroK8s.</p>
+<p>Плагин cert-manager управляет процессом выпуска и продления SSL - сертификатов.</p>
+<p><em>Команды</em></p>
+<pre><code class="language-bash">ssh root@194.226.49.162
+microk8s enable cert-manager
+</code></pre>
+<p><em>Вывод консоли</em></p>
+<pre><code class="language-bash">root@vps1724252356:~# microk8s enable cert-manager
+Infer repository core for addon cert-manager
+Enable DNS addon
+Infer repository core for addon dns
+Addon core/dns is already enabled
+Enabling cert-manager
+namespace/cert-manager created
+customresourcedefinition.apiextensions.k8s.io/certificaterequests.cert-manager.io created
+customresourcedefinition.apiextensions.k8s.io/certificates.cert-manager.io created
+customresourcedefinition.apiextensions.k8s.io/challenges.acme.cert-manager.io created
+customresourcedefinition.apiextensions.k8s.io/clusterissuers.cert-manager.io created
+customresourcedefinition.apiextensions.k8s.io/issuers.cert-manager.io created
+customresourcedefinition.apiextensions.k8s.io/orders.acme.cert-manager.io created
+serviceaccount/cert-manager-cainjector created
+serviceaccount/cert-manager created
+serviceaccount/cert-manager-webhook created
+configmap/cert-manager-webhook created
+clusterrole.rbac.authorization.k8s.io/cert-manager-cainjector created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-issuers created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-clusterissuers created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-certificates created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-orders created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-challenges created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-ingress-shim created
+clusterrole.rbac.authorization.k8s.io/cert-manager-view created
+clusterrole.rbac.authorization.k8s.io/cert-manager-edit created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-approve:cert-manager-io created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-certificatesigningrequests created
+clusterrole.rbac.authorization.k8s.io/cert-manager-webhook:subjectaccessreviews created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-cainjector created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-issuers created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-clusterissuers created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-certificates created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-orders created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-challenges created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-ingress-shim created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-approve:cert-manager-io created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-certificatesigningrequests created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-webhook:subjectaccessreviews created
+role.rbac.authorization.k8s.io/cert-manager-cainjector:leaderelection created
+role.rbac.authorization.k8s.io/cert-manager:leaderelection created
+role.rbac.authorization.k8s.io/cert-manager-webhook:dynamic-serving created
+rolebinding.rbac.authorization.k8s.io/cert-manager-cainjector:leaderelection created
+rolebinding.rbac.authorization.k8s.io/cert-manager:leaderelection created
+rolebinding.rbac.authorization.k8s.io/cert-manager-webhook:dynamic-serving created
+service/cert-manager created
+service/cert-manager-webhook created
+deployment.apps/cert-manager-cainjector created
+deployment.apps/cert-manager created
+deployment.apps/cert-manager-webhook created
+mutatingwebhookconfiguration.admissionregistration.k8s.io/cert-manager-webhook created
+validatingwebhookconfiguration.admissionregistration.k8s.io/cert-manager-webhook created
+Waiting for cert-manager to be ready.
+..ready
+Enabled cert-manager
+
+===========================
+
+Cert-manager is installed. As a next step, try creating a ClusterIssuer
+for Let&#x27;s Encrypt by creating the following resource:
+
+$ microk8s kubectl apply -f - &lt;&lt;EOF
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt
+spec:
+  acme:
+    # You must replace this email address with your own.
+    # Let&#x27;s Encrypt will use this to contact you about expiring
+    # certificates, and issues related to your account.
+    email: me@example.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      # Secret resource that will be used to store the account&#x27;s private key.
+      name: letsencrypt-account-key
+    # Add a single challenge solver, HTTP01 using nginx
+    solvers:
+    - http01:
+        ingress:
+          class: public
+EOF
+
+Then, you can create an ingress to expose &#x27;my-service:80&#x27; on &#x27;https://my-service.example.com&#x27; with:
+
+$ microk8s enable ingress
+$ microk8s kubectl create ingress my-ingress \
+    --annotation cert-manager.io/cluster-issuer=letsencrypt \
+    --rule &#x27;my-service.example.com/*=my-service:80,tls=my-service-tls&#x27;
+</code></pre>
+<h3 id="2-создаем-в-репозитории-файл-с-параметрами-ресурса-для-создания-сертификатов">2. Создаем в репозитории файл с параметрами ресурса для создания сертификатов</h3>
+<p>Существуют различные бесплатные и платные сайты которые выдают SSL - сертификаты, и мы можем указать в cert-manager каким образом и у кого брать эти сертификаты.</p>
+<p>Лично я сам настраивал только получение сертификатов с <a href="https://letsencrypt.org">https://letsencrypt.org</a> и <a href="https://www.cloudflare.com">https://www.cloudflare.com</a>, в данном проекте будут использоваться сертификаты от <code>Let&#x27;s Encrypt</code>.</p>
+<p>Для того чтобы указать источник для получения сертификатов нам нужно создать ресурс для создания сертификатов.</p>
+<p>Создаем файл <code>.kubernetes/templates/node/8.issuer.yaml</code></p>
+<pre><code class="language-yaml">apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+  namespace: cert-manager
+spec:
+  acme:
+    email: nestjs-mod@site15.ru
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    solvers:
+      - http01:
+          ingress:
+            class: public
+</code></pre>
+<h3 id="3-создаем-в-репозитории-файл-с-параметрами-сущности-kubernetes-которая-отвечает-за-проксирование-внешнего-трафика-в-наши-сервисы">3. Создаем в репозитории файл с параметрами сущности Kubernetes которая отвечает за проксирование внешнего трафика в наши сервисы</h3>
+<p>По умолчанию эта сущность создается на основе Nginx, ну можно настроить и Traefik, в данном проекте будет использоваться Nginx, так как он подставляется по умолчанию.</p>
+<p>Создаем файл <code>.kubernetes/templates/client/5.ingress.yaml</code></p>
+<pre><code class="language-yaml">apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: &#x27;%NAMESPACE%&#x27;
+  name: %NAMESPACE%-client-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: &#x27;3600&#x27;
+    nginx.ingress.kubernetes.io/proxy-read-timeout: &#x27;3600&#x27;
+    nginx.ingress.kubernetes.io/proxy-send-timeout: &#x27;3600&#x27;
+spec:
+  rules:
+    - host: %SERVER_DOMAIN%
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: %NAMESPACE%-client
+                port:
+                  number: %NGINX_PORT%
+  tls:
+    - hosts:
+        - %SERVER_DOMAIN%
+      secretName: %NAMESPACE%-client-tls
+</code></pre>
+<h3 id="4-немного-меняем-cicd-конфигурацию-для-деплоя-в-kubernetes-чтобы-исключить-лишний-передеплой-инфраструктуры">4. Немного меняем CI/CD-конфигурацию для деплоя в Kubernetes, чтобы исключить лишний передеплой инфраструктуры</h3>
+<p>Пайплайн деплоя можно по разному разбивать, кому как удобно и как надо, но в текущем посте я просто запрещу перезапуск инфраструктуры если версия приложения не была изменена.</p>
+<p>Обновленный вариант задачи по деплою приложения <code>.github/workflows/kubernetes.yml</code></p>
+<pre><code class="language-yaml"># ...
+jobs:
+  # ...
+  deploy:
+    environment: kubernetes
+    needs: [check-server-image, build-and-push-migrations-image, build-and-push-server-image, build-and-push-nginx-image, build-and-push-e2e-tests-image]
+    runs-on: [self-hosted]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Deploy infrastructure
+        if: ${{ needs.check-server-image.outputs.result != &#x27;success&#x27; || contains(github.event.head_commit.message, &#x27;[skip cache]&#x27;) || contains(github.event.head_commit.message, &#x27;[skip infrastructure]&#x27;) }}
+        env:
+          SERVER_APP_DATABASE_NAME: ${{ secrets.SERVER_APP_DATABASE_NAME }}
+          SERVER_APP_DATABASE_PASSWORD: ${{ secrets.SERVER_APP_DATABASE_PASSWORD }}
+          SERVER_APP_DATABASE_USERNAME: ${{ secrets.SERVER_APP_DATABASE_USERNAME }}
+          SERVER_POSTGRE_SQL_POSTGRESQL_DATABASE: ${{ secrets.SERVER_POSTGRE_SQL_POSTGRESQL_DATABASE }}
+          SERVER_POSTGRE_SQL_POSTGRESQL_PASSWORD: ${{ secrets.SERVER_POSTGRE_SQL_POSTGRESQL_PASSWORD }}
+          SERVER_POSTGRE_SQL_POSTGRESQL_USERNAME: ${{ secrets.SERVER_POSTGRE_SQL_POSTGRESQL_USERNAME }}
+        run: |
+          rm -rf ./.kubernetes/generated
+          . .kubernetes/set-env.sh &amp;&amp; npx -y rucken copy-paste --find=templates --replace=generated --replace-plural=generated --path=./.kubernetes/templates --replace-envs=true
+          docker compose -f ./.kubernetes/generated/docker-compose-infra.yml --compatibility down || echo &#x27;docker-compose-infra not started&#x27;
+          docker compose -f ./.kubernetes/generated/docker-compose-infra.yml --compatibility up -d
+
+      - name: Deploy applications
+        env:
+          DOCKER_SERVER: ${{ env.REGISTRY }}
+          DOCKER_USERNAME: ${{ github.actor }}
+          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          SERVER_APP_DATABASE_NAME: ${{ secrets.SERVER_APP_DATABASE_NAME }}
+          SERVER_APP_DATABASE_PASSWORD: ${{ secrets.SERVER_APP_DATABASE_PASSWORD }}
+          SERVER_APP_DATABASE_USERNAME: ${{ secrets.SERVER_APP_DATABASE_USERNAME }}
+          SERVER_DOMAIN: ${{ secrets.SERVER_DOMAIN }}
+        run: |
+          rm -rf ./.kubernetes/generated
+          . .kubernetes/set-env.sh &amp;&amp; npx -y rucken copy-paste --find=templates --replace=generated --replace-plural=generated --path=./.kubernetes/templates --replace-envs=true
+          chmod +x .kubernetes/generated/install.sh
+          .kubernetes/generated/install.sh &gt; /dev/null 2&gt;&amp;1 &amp;
+
+      - name: Run E2E-tests
+        env:
+          SERVER_DOMAIN: ${{ secrets.SERVER_DOMAIN }}
+        run: |
+          rm -rf ./.kubernetes/generated
+          . .kubernetes/set-env.sh &amp;&amp; npx -y rucken copy-paste --find=templates --replace=generated --replace-plural=generated --path=./.kubernetes/templates --replace-envs=true
+          docker compose -f ./.kubernetes/generated/docker-compose-e2e-tests.yml --compatibility up
+</code></pre>
+<h3 id="5-меняем-адрес-тестируемого-сайта-в-docker-compose---файле-для-e2e-тестов">5. Меняем адрес тестируемого сайта в &quot;Docker Compose&quot; - файле для E2E тестов</h3>
+<p>Так как теперь мы имеем домен с SSL - сертификатом, нам больше не нужно указывать порт с глобальным сервисом фронтенд Nginx при запуске E2E - тестов.</p>
+<p>Обновленный файл <code>.kubernetes/templates/docker-compose-e2e-tests.yml</code></p>
+<pre><code class="language-yaml">version: &#x27;3&#x27;
+networks:
+  nestjs-mod-fullstack-network:
+    driver: &#x27;bridge&#x27;
+services:
+  nestjs-mod-fullstack-e2e-tests:
+    image: &#x27;ghcr.io/nestjs-mod/nestjs-mod-fullstack-e2e-tests:%ROOT_VERSION%&#x27;
+    container_name: &#x27;nestjs-mod-fullstack-e2e-tests&#x27;
+    networks:
+      - &#x27;nestjs-mod-fullstack-network&#x27;
+    environment:
+      BASE_URL: &#x27;https://%SERVER_DOMAIN%&#x27;
+    working_dir: &#x27;/usr/src/app&#x27;
+    volumes:
+      - &#x27;./../../apps:/usr/src/app/apps&#x27;
+      - &#x27;./../../libs:/usr/src/app/libs&#x27;
+</code></pre>
+<h3 id="6-коммитим-изменения-и-ждем-когда-cicd-отработает-успешно-и-руками-проверяем-работу-сайта">6. Коммитим изменения и ждем когда CI/CD отработает успешно и руками проверяем работу сайта</h3>
+<p>Текущий результат работы CI/CD: <a href="https://github.com/nestjs-mod/nestjs-mod-fullstack/actions/runs/10877250887">https://github.com/nestjs-mod/nestjs-mod-fullstack/actions/runs/10877250887</a>
+Текущий сайт: <a href="https://fullstack.nestjs-mod.com">https://fullstack.nestjs-mod.com</a></p>
+<h3 id="7-удаляем-глобальный-сервис-который-создавали-в-преды дущем-посте">7. Удаляем глобальный сервис который создавали в предыдущем посте</h3>
+<p>Теперь деплой и тестирование происходит сайта который работает через Ingress и значит сайт запущенный в виде глобального сервиса через NodePort больше нам не нужен и его можно удалить.</p>
+<p>Удалить можно подключившись к выделенному серверу по ssh через команду <code>sudo microk8s kubectl delete service master-client-global --namespace master</code>, но желательно всегда доносить изменения через git - репозиторий, так как у нас может быть несколько стендов на которых также нужно будет еще раз запускать эту команду.</p>
+<p>В данном проекте изменения мы донесем через git, для этого удалим файл <code>.kubernetes/templates/client/4.global-service.yaml</code> и добавим команду удаления в скрипт инсталяции приложений.</p>
+<p>Обновляем файл <code>.kubernetes/templates/install.sh</code></p>
+<pre><code class="language-yaml">#!/bin/bash
+set -e
+
+# docker regcred for pull docker images
+sudo microk8s kubectl delete secret docker-regcred || echo &#x27;not need delete secret docker-regcred&#x27;
+sudo microk8s kubectl create secret docker-registry docker-regcred --docker-server=%DOCKER_SERVER% --docker-username=%DOCKER_USERNAME% --docker-password=%DOCKER_PASSWORD% --docker-email=docker-regcred
+
+# namespace and common config
+sudo microk8s kubectl apply -f .kubernetes/generated/node
+sudo microk8s kubectl get secret docker-regcred -n default -o yaml || sed s/&quot;namespace: default&quot;/&quot;namespace: %NAMESPACE%&quot;/ || microk8s kubectl apply -n %NAMESPACE% -f - || echo &#x27;not need update docker-regcred&#x27;
+
+# server
+sudo microk8s kubectl apply -f .kubernetes/generated/server
+
+# client
+sudo microk8s kubectl apply -f .kubernetes/generated/client
+
+# depricated
+sudo microk8s kubectl delete service master-client-global --namespace master || echo &#x27;not need delete master-client-global&#x27;
+</code></pre>
+<h3 id="8-коммитим-изменения-и-ждем-когда-cicd-отработает-успешно-и-руками-проверяем-что-сайт-httpfullstacknestjs-modcom30222-больше-не-работает">8. Коммитим изменения и ждем когда CI/CD отработает успешно и руками проверяем что сайт <a href="http://fullstack.nestjs-mod.com:30222">http://fullstack.nestjs-mod.com:30222</a> больше не работает</h3>
+<p>Текущий сайт: <a href="https://fullstack.nestjs-mod.com">https://fullstack.nestjs-mod.com</a></p>
+<h3 id="заключение">Заключение</h3>
+<p>В данном проекте Ingress будет работать просто как прокси до нашего собственного Nginx с встроенным фронтенд приложением и все дальнейшие новые микросервисы и приложения которые будут разрабатываться и к которым нужен будет доступ снаружи, также будут описываться в нашем собственном Nginx.</p>
+<p>Собственный Nginx со всеми нашими правилами маршрутизации нужен для того чтобы иметь возможность развернуть все приложения без Kubernetes и не пришлось иметь несколько разных файлов с конфигурацией Nginx.</p>
+<h3 id="планы">Планы</h3>
+<p>В следующем посте я добавлю семантическое версионирование приложений которое будет запускаться в зависимости от изменений в зависимых файлах...</p>
+<h3 id="ссылки">Ссылки</h3>
+<ul>
+<li><a href="https://nestjs.com">https://nestjs.com</a> - официальный сайт фреймворка</li>
+<li><a href="https://nestjs-mod.com">https://nestjs-mod.com</a> - официальный сайт дополнительных утилит</li>
+<li><a href="https://fullstack.nestjs-mod.com">https://fullstack.nestjs-mod.com</a> - сайт из поста</li>
+<li><a href="https://github.com/nestjs-mod/nestjs-mod-fullstack">https://github.com/nestjs-mod/nestjs-mod-fullstack</a> - проект из поста</li>
+<li><a href="https://github.com/nestjs-mod/nestjs-mod-fullstack/compare/28ebc77b38b2b1c9945e87806e5726451b8d22a2..33b51edf67471600e583f89f10b2d99a1b9b79da">https://github.com/nestjs-mod/nestjs-mod-fullstack/compare/28ebc77b38b2b1c9945e87806e5726451b8d22a2..33b51edf67471600e583f89f10b2d99a1b9b79da</a> - изменения</li>
+</ul>
+<p>#kubernetes #github #nestjsmod #fullstack</p></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col"><a href="https://github.com/nestjs-mod/nestjs-mod.com/blob/master/docs/ru-posts/fullstack/2024-09-15/ru.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/docs/ru-posts/fullstack/2024-09-13/ru"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">ru</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/docs/ru-posts/fullstack/2024-09-16/ru"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">ru</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a class="table-of-contents__link toc-highlight" href="/docs/ru-posts/fullstack/2024-09-15/ru#2024-09-15-доступ-к-сайту-на-nestjs-и-angular-по-доменному-имени-c-ssl---сертификатом-в-kubernetes-через-ingress">[2024-09-15] Доступ к сайту на NestJS и Angular по доменному имени c SSL - сертификатом в Kubernetes через Ingress</a><ul><li><a class="table-of-contents__link toc-highlight" href="/docs/ru-posts/fullstack/2024-09-15/ru#1-установка-менеджера-сертификатов-на-выделенный-сервер">1. Установка менеджера сертификатов на выделенный сервер</a></li><li><a class="table-of-contents__link toc-highlight" href="/docs/ru-posts/fullstack/2024-09-15/ru#2-создаем-в-репозитории-файл-с-параметрами-ресурса-для-создания-сертификатов">2. Создаем в репозитории файл с параметрами ресурса для создания сертификатов</a></li><li><a class="table-of-contents__link toc-highlight" href="/docs/ru-posts/fullstack/2024-09-15/ru#3-создаем-в-репозитории-файл-с-параметрами-сущности-kubernetes-которая-отвечает-за-проксирование-внешнего-трафика-в-наши-сервисы">3. Создаем в репозитории файл с параметрами сущности Kubernetes которая отвечает за проксирование внешнего трафика в наши сервисы</a></li><li><a class="table-of-contents__link toc-highlight" href="/docs/ru-posts/fullstack/2024-09-15/ru#4-немного-меняем-cicd-конфигурацию-для-деплоя-в-kubernetes-чтобы-исключить-лишний-пере деплой-инфраструктуры">4. Немного меняем CI/CD-конфигурацию для деплоя в Kubernetes, чтобы исключить лишний передеплой инфраструктуры</a></li><li><a class="table-of-contents__link toc-highlight" href="/docs/ru-posts/fullstack/2024-09-15/ru#5-меняем-адрес-тестируемого-сайта-в-docker-compose---файле-для-e2e-тестов">5. Меняем адрес тестируемого сайта в &quot;Docker Compose&quot; - файле для E2E тестов</a></li><li><a class="table-of-contents__link toc-highlight" href="/docs/ru-posts/fullstack/2024-09-15/ru#6-коммитим-изменения-и-ждем-когда-cicd-отработает-успешно-и-руками-проверяем-работу-сайта">6. Коммитим изменения и ждем когда CI/CD отработает успешно и руками проверяем работу сайта</a></li><li><a class="table-of-contents__link toc-highlight" href="/docs/ru-posts/fullstack/2024-09-15/ru#7-удаляем-глобальный-сервис-который-создавали-в-предыдущем-посте">7. Удаляем глобальный сервис который создавали в предыдущем посте</a></li><li><a class="table-of-contents__link toc-highlight" href="/docs/ru-posts/fullstack/2024-09-15/ru#8-коммитим-изменения-и-ждем-когда-cicd-отработает-успешно-и-руками-проверяем-что-сайт-httpfullstacknestjs-modcom30222-больше-не-работает">8. Коммитим изменения и ждем когда CI/CD отработает успешно и руками проверяем что сайт http://fullstack.nestjs-mod.com:30222 больше не работает</a></li><li><a class="table-of-contents__link toc-highlight" href="/docs/ru-posts/fullstack/2024-09-15/ru#заключение">Заключение</a></li><li><a class="table-of-contents__link toc-highlight" href="/docs/ru-posts/fullstack/2024-09-15/ru#планы">Планы</a></li><li><a class="table-of-contents__link toc-highlight" href="/docs/ru-posts/fullstack/2024-09-15/ru#ссылки">Ссылки</a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/docs/guides/introduction">Getting Started</a></li></ul></div><div class="col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://discord.gg/drpg5rTmgG" target="_blank" rel="noopener noreferrer" class="footer__link-item">Discord<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://t.me/nestjs_mod" target="_blank" rel="noopener noreferrer" class="footer__link-item">Telegram<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div><div class="col footer__col"><div class="footer__title">Links</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://dev.to/t/nestjsmod" target="_blank" rel="noopener noreferrer" class="footer__link-item">Posts on Dev.to<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://habr.com/ru/search/?q=[nestjsmod]" target="_blank" rel="noopener noreferrer" class="footer__link-item">Posts on Habr.com<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://github.com/nestjs-mod" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://www.npmjs.com/org/nestjs-mod" target="_blank" rel="noopener noreferrer" class="footer__link-item">NPM<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 NestJS-mod</div></div></div></footer></div>
+</body>
+</html>

@@ -1,11 +1,14 @@
-const fg = require("fast-glob");
-const normalizePath_ = require("normalize-path");
+import fg from "fast-glob";
+import normalizePath_ from "normalize-path";
+import { fileURLToPath } from "url";
+import { basename, dirname, join } from "path";
 
 import { promises as fsPromises, rmdir, rmdirSync, rmSync } from "node:fs";
 import { readFile } from "node:fs/promises";
-import { basename, dirname } from "node:path";
-import { join } from "path";
-import * as writeFileAtomic from "write-file-atomic";
+import writeFileAtomic from "write-file-atomic";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 function escapeStringRegexp(string) {
   if (typeof string !== "string") {
@@ -106,23 +109,44 @@ export async function replaceInFiler(
 }
 
 async function main() {
-  await replaceInFiler(
-    [
-      join(__dirname, "../docs/en-posts/fullstack/**"),
-      join(__dirname, "../docs/ru-posts/fullstack/**"),
-    ],
-    {
-      find: [
-        "{% endspoiler %}",
-        "{% spoiler ",
-        " %}",
-        '<spoiler title="',
-        '">',
-        "</spoiler>",
-      ],
-      replacement: ["</spoiler>", '<spoiler title="', '">', "_", "_", ""],
-    }
+  // Fix all MDX compilation issues in fullstack posts
+  const allMdFiles = await fg.glob([
+    join(__dirname, "../docs/en-posts/fullstack/**/*.md"),
+    join(__dirname, "../docs/ru-posts/fullstack/**/*.md"),
+  ]);
+
+  console.log(`Found ${allMdFiles.length} markdown files to process...`);
+
+  await Promise.all(
+    allMdFiles.map(async (filePath) => {
+      try {
+        let content = await readFile(filePath, "utf8");
+        let originalContent = content;
+
+        // Fix {% spoiler ... %} patterns
+        content = content.replace(/\{%\s*spoiler\s+([^%]*)%\}/gi, '<spoiler title="$1">');
+        
+        // Fix {% endspoiler %} patterns
+        content = content.replace(/\{%\s*endspoiler\s*%\}/gi, "</spoiler>");
+        
+        // Fix any other {% ... %} patterns that might cause issues
+        content = content.replace(/\{%\s*(\w+)\s*([^%]*)%\}/g, (match, keyword, attrs) => {
+          // Convert to MDX comment to avoid parsing errors
+          return `{/* ${match} */}`;
+        });
+
+        // Only write if content changed
+        if (content !== originalContent) {
+          await writeFileAtomic(filePath, content);
+          console.log(`✓ Fixed: ${filePath}`);
+        }
+      } catch (err) {
+        console.error(`✗ Error processing ${filePath}:`, err);
+      }
+    })
   );
+
+  console.log("MDX fixes complete!");
   await writeFileAtomic(
     join(__dirname, "..", "docs/ru-posts/fullstack/_category_.json"),
     `{

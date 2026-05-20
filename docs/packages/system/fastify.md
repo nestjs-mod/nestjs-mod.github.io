@@ -78,7 +78,7 @@ bootstrapNestApplication({
 |`autoFlushLogs`|If enabled, logs will be automatically flushed and buffer detached when application initialization process either completes or fails. @default true|**optional**|-|-|
 |`preview`|Whether to run application in the preview mode. In the preview mode, providers/controllers are not instantiated & resolved. @default false|**optional**|-|-|
 |`snapshot`|Whether to generate a serialized graph snapshot. @default false|**optional**|-|-|
-|`forceCloseConnections`|Force close open HTTP connections. Useful if restarting your application hangs due to keep-alive connections in the HTTP adapter.|**optional**|```true```|-|
+|`forceCloseConnections`|Force close open HTTP connections. Useful if restarting your application hangs due to keep-alive connections in the HTTP adapter.|**optional**|```true```|```true```|
 |`wrapFastifyAdapter`|Method for additional actions before listening|**optional**|-|-|
 
 [Back to Top](#modules)
@@ -112,7 +112,7 @@ bootstrapNestApplication({
             Logger.log(
               `🚀 Application is running on: http://${current.staticEnvironments?.hostname || 'localhost'}:${
                 current.staticEnvironments?.port
-              }/api`
+              }/api`,
             );
           },
         },
@@ -136,14 +136,14 @@ bootstrapNestApplication({
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`mode`|Mode of start application: init - for run NestJS life cycle, listen -  for full start NestJS application|**optional**|```listen```|-|
+|`mode`|Mode of start application: init - for run NestJS life cycle, listen -  for full start NestJS application|**optional**|```listen```|```listen```|
 |`preListen`|Method for additional actions before listening|**optional**|-|-|
 |`postListen`|Method for additional actions after listening|**optional**|-|-|
 |`defaultLogger`|Fastify logger for application|**optional**|-|-|
-|`enableShutdownHooks`|Enable shutdown hooks|**optional**|```true```|-|
-|`globalPrefix`|Global prefix|**optional**|```api```|-|
+|`enableShutdownHooks`|Enable shutdown hooks|**optional**|```true```|```true```|
+|`globalPrefix`|Global prefix|**optional**|```api```|```api```|
 |`autoCloseTimeoutInInfrastructureMode`|Timeout seconds for automatically closes the application in `infrastructure mode` if the application does not close itself (zero - disable)|**optional**|-|-|
-|`logApplicationStart`|Log application start|**optional**|```true```|-|
+|`logApplicationStart`|Log application start|**optional**|```true```|```true```|
 
 [Back to Top](#modules)
 
