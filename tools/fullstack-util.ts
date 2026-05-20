@@ -1,14 +1,13 @@
-import fg from "fast-glob";
-import normalizePath_ from "normalize-path";
-import { fileURLToPath } from "url";
-import { basename, dirname, join } from "path";
+const fg = require("fast-glob");
+const normalizePath_ = require("normalize-path");
 
 import { promises as fsPromises, rmdir, rmdirSync, rmSync } from "node:fs";
 import { readFile } from "node:fs/promises";
-import writeFileAtomic from "write-file-atomic";
+import { basename, dirname } from "node:path";
+import { join } from "path";
+import * as writeFileAtomic from "write-file-atomic";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+
 
 function escapeStringRegexp(string) {
   if (typeof string !== "string") {
@@ -85,10 +84,38 @@ export async function replaceInFiler(
         const firstLineDate = firstLine.split("]")[0].split("[")[1];
         const firstLineText = firstLine.split("]").splice(1).join("]").trim();
 
+        // Determine language based on path
+        const isEnglish = filePath.includes("/en-posts/");
+        const dateLabel = isEnglish ? "Publication date" : "Дата публикации";
+
+        // Create slug from the title
+        const slugifiedTitle = firstLineText
+          .trim()
+          .replace(/\s+/g, "-")
+          .replace(/[^\p{L}\p{N}-]/gu, "")
+          .toLowerCase();
+
+        // Escape double quotes in title for YAML compatibility
+        const escapedTitle = firstLineText.replace(/"/g, '\\"');
+
+        // Add Docusaurus frontmatter with metadata
+        const frontmatter = [
+          '---',
+          `title: "${escapedTitle}"`,
+          `slug: "/${firstLineDate}-${slugifiedTitle}"`,
+          `sidebar_label: "${escapedTitle}"`,
+          '---',
+          '',
+        ].join('\n');
+
         await writeFileAtomic(
           join(filePath, "..", "..", `${firstLineDate}.md`),
           [
+            frontmatter,
             `# ${firstLineText}`,
+            '',
+            `> **${dateLabel}:** ${firstLineDate}`,
+            '',
             ...newString
               .split("\n")
               .filter((s, i, a) =>
@@ -125,21 +152,86 @@ async function main() {
 
         // Fix {% spoiler ... %} patterns
         content = content.replace(/\{%\s*spoiler\s+([^%]*)%\}/gi, '<spoiler title="$1">');
-        
+
         // Fix {% endspoiler %} patterns
         content = content.replace(/\{%\s*endspoiler\s*%\}/gi, "</spoiler>");
-        
+
         // Fix any other {% ... %} patterns that might cause issues
         content = content.replace(/\{%\s*(\w+)\s*([^%]*)%\}/g, (match, keyword, attrs) => {
           // Convert to MDX comment to avoid parsing errors
           return `{/* ${match} */}`;
         });
 
-        // Only write if content changed
-        if (content !== originalContent) {
-          await writeFileAtomic(filePath, content);
-          console.log(`✓ Fixed: ${filePath}`);
+        // Extract the date from the file path (e.g., "2024-08-08" from "/2024-08-08/ru.md")
+        const pathParts = filePath.split("/");
+        const dateDir = pathParts[pathParts.length - 2]; // Second to last part is the date directory
+        const fileName = pathParts[pathParts.length - 1]; // Last part is the filename (ru.md or en.md)
+
+        // Determine language based on path
+        const isEnglish = filePath.includes("/en-posts/");
+        const dateLabel = isEnglish ? "Publication date" : "Дата публикации";
+
+        // Extract title from the first line of the file
+        // Expected format: "## [2024-08-08] Создание пустого проекта с помощью NestJS-mod."
+        const firstLineMatch = content.match(/^##\s+\[([^\]]+)\]\s+(.+)$/m);
+        let newFileName = dateDir;
+        let title = "";
+
+        if (firstLineMatch) {
+          const dateFromTitle = firstLineMatch[1]; // e.g., "2024-08-08"
+          title = firstLineMatch[2]; // e.g., "Создание пустого проекта с помощью NestJS-mod."
+
+          // Remove trailing period if exists
+          if (title.endsWith(".")) {
+            title = title.slice(0, -1);
+          }
+
+          // Use title as the filename (slugify it)
+          // Keep Cyrillic characters, replace spaces with hyphens, remove special characters
+          const slugifiedTitle = (title || dateFromTitle)
+            .trim()
+            .replace(/\s+/g, "-")
+            .replace(new RegExp("[^\\p{L}\\p{N}-]", "gu"), "") // Keep letters, numbers, and hyphens
+            .toLowerCase();
+
+          // Combine date and title for the filename
+          newFileName = `${dateFromTitle}-${slugifiedTitle}`;
+
+          // Remove the first line with the old title format
+          content = content.replace(/^##\s+\[[^\]]+\]\s+.+$/m, "").trimStart();
+
+          // Escape double quotes in title for YAML compatibility
+          const escapedTitle = title.replace(/"/g, '\\"');
+
+          // Add Docusaurus frontmatter with metadata
+          const frontmatter = [
+            '---',
+            `title: "${escapedTitle}"`,
+            `slug: "/${dateFromTitle}-${slugifiedTitle}"`,
+            `sidebar_label: "${escapedTitle}"`,
+            '---',
+            '',
+          ].join('\n');
+
+          // Add H1 heading with the title after frontmatter
+          // Add date note at the beginning
+          const dateNote = `> **${dateLabel}:** ${dateFromTitle}\n`;
+          content = `${frontmatter}# ${title}\n\n${dateNote}\n${content}`;
         }
+
+        // Determine the new file path (one level up, with .md extension)
+        const dirPath = dirname(filePath);
+        const parentDir = dirname(dirPath);
+        const newFilePath = join(parentDir, `${newFileName}.md`);
+
+        // Write the processed content to the new location
+        await writeFileAtomic(newFilePath, content);
+        console.log(`✓ Processed: ${filePath} -> ${newFilePath}`);
+
+        // Remove the old directory
+        rmSync(dirPath, { recursive: true, force: true });
+        console.log(`  Deleted old directory: ${dirPath}`);
+
       } catch (err) {
         console.error(`✗ Error processing ${filePath}:`, err);
       }
