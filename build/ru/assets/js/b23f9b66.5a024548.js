@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunknestjs_mod_com=globalThis.webpackChunknestjs_mod_com||[]).push([[5005],{9901(o){o.exports=JSON.parse('{"metadata":{"permalink":"/ru/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":0,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);

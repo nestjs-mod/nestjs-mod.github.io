@@ -1,0 +1,34 @@
+{
+  "title": {
+    "message": "NestJS-mod",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "NestJS-mod",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Docs": {
+    "message": "Docs",
+    "description": "Navbar item with label Docs"
+  },
+  "item.label.Packages": {
+    "message": "Packages",
+    "description": "Navbar item with label Packages"
+  },
+  "item.label.Posts": {
+    "message": "Posts",
+    "description": "Navbar item with label Posts"
+  },
+  "item.label.Документация": {
+    "message": "Документация",
+    "description": "Navbar item with label Документация"
+  },
+  "item.label.Посты": {
+    "message": "Посты",
+    "description": "Navbar item with label Посты"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}

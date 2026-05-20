@@ -28,3 +28,14 @@
   --ifm-color-primary-lightest: #E0234E;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+/* Locale-specific navbar items */
+/* Hide Russian items on English site */
+html[lang="en-US"] .navbar__item.navbar-item-ru {
+  display: none !important;
+}
+
+/* Hide English items on Russian site */
+html[lang="ru-RU"] .navbar__item.navbar-item-en {
+  display: none !important;
+}

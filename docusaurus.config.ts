@@ -28,7 +28,19 @@ const config: Config = {
   // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: "en",
-    locales: ["en"],
+    locales: ["en", "ru"],
+    localeConfigs: {
+      en: {
+        label: "English",
+        direction: "ltr",
+        htmlLang: "en-US",
+      },
+      ru: {
+        label: "Русский",
+        direction: "ltr",
+        htmlLang: "ru-RU",
+      },
+    },
   },
 
   presets: [
@@ -59,33 +71,57 @@ const config: Config = {
         src: "img/logo.svg",
       },
       items: [
-        {
-          type: "docSidebar",
-          sidebarId: "guidesSidebar",
-          position: "left",
-          label: "Docs",
-          collapsed: false,
-        },
+        // English locale items
         {
           type: "docSidebar",
           sidebarId: "packagesSidebar",
           position: "left",
           label: "Packages",
           collapsed: false,
+          docsPluginId: "default",
+        },
+        {
+          type: "docSidebar",
+          sidebarId: "guidesSidebar",
+          position: "left",
+          label: "Docs",
+          className: "navbar-item-en",
+          collapsed: false,
+          docsPluginId: "default",
         },
         {
           type: "docSidebar",
           sidebarId: "enPostsSidebar",
           position: "left",
           label: "Posts",
+          className: "navbar-item-en",
           collapsed: false,
+          docsPluginId: "default",
+        },
+        // Russian locale items
+        {
+          type: "docSidebar",
+          sidebarId: "ruGuidesSidebar",
+          position: "left",
+          label: "Документация",
+          className: "navbar-item-ru",
+          collapsed: false,
+          docsPluginId: "default",
         },
         {
           type: "docSidebar",
           sidebarId: "ruPostsSidebar",
           position: "left",
           label: "Посты",
+          className: "navbar-item-ru",
           collapsed: false,
+          docsPluginId: "default",
+        },
+        {
+          type: "localeDropdown",
+          position: "right",
+          dropdownItemsBefore: [],
+          dropdownItemsAfter: [],
         },
         {
           href: "https://github.com/nestjs-mod",

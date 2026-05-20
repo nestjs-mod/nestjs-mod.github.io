@@ -1,0 +1,78 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.guidesSidebar.category.Main components": {
+    "message": "Main components",
+    "description": "The label for category 'Main components' in sidebar 'guidesSidebar'"
+  },
+  "sidebar.guidesSidebar.category.Main components.link.generated-index.description": {
+    "message": "Main components of the project.",
+    "description": "The generated-index page description for category 'Main components' in sidebar 'guidesSidebar'"
+  },
+  "sidebar.packagesSidebar.category.Common": {
+    "message": "Common",
+    "description": "The label for category 'Common' in sidebar 'packagesSidebar'"
+  },
+  "sidebar.packagesSidebar.category.Common.link.generated-index.description": {
+    "message": "Коллекция утилит для унификации приложений и модулей NestJS.",
+    "description": "The generated-index page description for category 'Common' in sidebar 'packagesSidebar'"
+  },
+  "sidebar.packagesSidebar.category.System": {
+    "message": "System",
+    "description": "The label for category 'System' in sidebar 'packagesSidebar'"
+  },
+  "sidebar.packagesSidebar.category.System.link.generated-index.description": {
+    "message": "System modules necessary for the operation of the entire application (examples: launching a NestJS application, launching microservices, etc.). Only NestJS-mod compatible modules.",
+    "description": "The generated-index page description for category 'System' in sidebar 'packagesSidebar'"
+  },
+  "sidebar.packagesSidebar.category.Core": {
+    "message": "Core",
+    "description": "The label for category 'Core' in sidebar 'packagesSidebar'"
+  },
+  "sidebar.packagesSidebar.category.Core.link.generated-index.description": {
+    "message": "Core modules necessary for the operation of feature and integration modules (examples: main module with connection to the database, main module for connecting to aws, etc.). NestJS and NestJS-mod compatible modules.",
+    "description": "The generated-index page description for category 'Core' in sidebar 'packagesSidebar'"
+  },
+  "sidebar.packagesSidebar.category.Feature": {
+    "message": "Feature",
+    "description": "The label for category 'Feature' in sidebar 'packagesSidebar'"
+  },
+  "sidebar.packagesSidebar.category.Feature.link.generated-index.description": {
+    "message": "Feature modules with business logic of the application. NestJS and NestJS-mod compatible modules.",
+    "description": "The generated-index page description for category 'Feature' in sidebar 'packagesSidebar'"
+  },
+  "sidebar.packagesSidebar.category.Infrastructure": {
+    "message": "Infrastructure",
+    "description": "The label for category 'Infrastructure' in sidebar 'packagesSidebar'"
+  },
+  "sidebar.packagesSidebar.category.Infrastructure.link.generated-index.description": {
+    "message": "Infrastructure modules are needed to create configurations that launch various external services (examples: docker-compose file for raising a database, gitlab configuration for deploying an application). Only NestJS-mod compatible modules.",
+    "description": "The generated-index page description for category 'Infrastructure' in sidebar 'packagesSidebar'"
+  },
+  "sidebar.enPostsSidebar.category.Fullstack": {
+    "message": "Fullstack",
+    "description": "The label for category 'Fullstack' in sidebar 'enPostsSidebar'"
+  },
+  "sidebar.enPostsSidebar.category.Fullstack.link.generated-index.description": {
+    "message": "Boilerplate for creating a fullstack application on NestJS and Angular.",
+    "description": "The generated-index page description for category 'Fullstack' in sidebar 'enPostsSidebar'"
+  },
+  "sidebar.ruPostsSidebar.category.Fullstack": {
+    "message": "Fullstack",
+    "description": "The label for category 'Fullstack' in sidebar 'ruPostsSidebar'"
+  },
+  "sidebar.ruPostsSidebar.category.Fullstack.link.generated-index.description": {
+    "message": "Шаблон для создания fullstack-приложения на NestJS и Angular.",
+    "description": "The generated-index page description for category 'Fullstack' in sidebar 'ruPostsSidebar'"
+  },
+  "sidebar.ruGuidesSidebar.category.Основные компоненты": {
+    "message": "Основные компоненты",
+    "description": "The label for category 'Основные компоненты' in sidebar 'ruGuidesSidebar'"
+  },
+  "sidebar.ruGuidesSidebar.category.Основные компоненты.link.generated-index.description": {
+    "message": "Основные компоненты проекта.",
+    "description": "The generated-index page description for category 'Основные компоненты' in sidebar 'ruGuidesSidebar'"
+  }
+}
