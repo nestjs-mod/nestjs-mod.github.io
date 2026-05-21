@@ -1,0 +1,11 @@
+{
+  "label": "Nest Module",
+  "position": 1,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "title": "Nest Module: обзор",
+    "description": "Контекст раздела из профильной документации: Function for creating a configurable module with the ability to use multi-providing."
+  },
+  "key": "ru-tests/common/nest-module"
+}

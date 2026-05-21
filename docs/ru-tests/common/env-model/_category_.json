@@ -1,0 +1,11 @@
+{
+  "label": "Env Model",
+  "position": 1,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "title": "Env Model: обзор",
+    "description": "Контекст раздела из профильной документации: Decorators for describing module environment variables and functions for its serialization and verification."
+  },
+  "key": "ru-tests/common/env-model"
+}

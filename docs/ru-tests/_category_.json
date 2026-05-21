@@ -1,0 +1,11 @@
+{
+  "label": "Тесты",
+  "position": 1,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "title": "Тесты: обзор",
+    "description": "Контекст раздела из профильной документации: Modules and utilities for writing application tests"
+  },
+  "key": "ru-tests/__root__"
+}

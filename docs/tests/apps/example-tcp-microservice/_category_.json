@@ -1,0 +1,11 @@
+{
+  "label": "Example Tcp Microservice",
+  "position": 1,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "title": "Example Tcp Microservice: overview",
+    "description": "Section context from focused docs: A collection of utilities for unifying NestJS applications and modules"
+  },
+  "key": "tests/apps/example-tcp-microservice"
+}

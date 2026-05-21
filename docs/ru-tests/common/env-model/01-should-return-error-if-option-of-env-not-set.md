@@ -1,0 +1,100 @@
+---
+id: ru-tests-libs-common-src-lib-env-model-01-should-return-error-if-option-of-env-not-set-fe098b774d
+title: "EnvModel: Возвращает ошибку, если option of env not set"
+sidebar_label: "01 Возвращает ошибку, если option of env not set"
+description: "Контекст тестового раздела: Тесты проверяют EnvModel в nestjs-mod: чтение переменных окружения, валидацию обязательных полей и передачу значений в сервисы через DI."
+---
+
+# EnvModel: Возвращает ошибку, если option of env not set
+
+## Обзор
+
+Тесты проверяют EnvModel в nestjs-mod: чтение переменных окружения, валидацию обязательных полей и передачу значений в сервисы через DI.
+
+## Что делаем и что проверяем
+
+- Проверяем, как `envTransform` и декораторы `EnvModel/EnvModelProperty` извлекают и валидируют значения окружения.
+- Подтверждаем ожидаемое поведение при отсутствии или некорректности обязательных env-полей.
+- Фиксируем контракт доступа сервисов к env-значениям через DI.
+
+- Отдельно проверяем контракт ошибок: не только факт падения, но и содержание/тип ошибки, важные для потребителей модуля.
+## Ссылка на GitHub
+
+- **Файл**: [utils.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/main/libs/common/src/lib/env-model/utils.spec.ts#L8)
+- **Строка**: 8
+
+## Подготовительный код
+
+```typescript
+import { DynamicModule, Injectable, Module } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+import { IsNotEmpty } from 'class-validator';
+import { EnvModel, EnvModelProperty } from './decorators';
+import { envTransform } from './utils';
+
+describe('Env model: Utils', () => {
+  it('should return error if option of env not set', async () => {
+    @EnvModel()
+    class AppEnv {
+      @EnvModelProperty()
+      @IsNotEmpty()
+      option!: string;
+    }
+
+    @Module({ providers: [AppEnv] })
+    class AppModule {
+      static forRoot(env: Partial<AppEnv>): DynamicModule {
+        return {
+          module: AppModule,
+          providers: [
+            {
+              provide: `${AppEnv.name}_loader`,
+              useFactory: async (emptyAppEnv: AppEnv) => {
+                if (env.constructor !== Object) {
+                  Object.setPrototypeOf(emptyAppEnv, env);
+                }
+                const obj = await envTransform({
+                  model: AppEnv,
+                  data: env,
+                });
+                Object.assign(emptyAppEnv, obj.data);
+              },
+              inject: [AppEnv],
+            },
+          ],
+        };
+      }
+    }
+
+```
+
+## Код теста
+
+```typescript
+  it('should return error if option of env not set', async () => {
+    @EnvModel()
+    class AppEnv {
+      @EnvModelProperty()
+      @IsNotEmpty()
+      option!: string;
+    }
+
+    @Module({ providers: [AppEnv] })
+    class AppModule {
+      static forRoot(env: Partial<AppEnv>): DynamicModule {
+        return {
+          module: AppModule,
+          providers: [
+            {
+              provide: `${AppEnv.name}_loader`,
+              useFactory: async (emptyAppEnv: AppEnv) => {
+                if (env.constructor !== Object) {
+                  Object.setPrototypeOf(emptyAppEnv, env);
+                }
+                const obj = await envTransform({
+                  model: AppEnv,
+                  data: env,
+                });
+                Object.assign(emptyAppEnv, obj.data);
+              },
+```

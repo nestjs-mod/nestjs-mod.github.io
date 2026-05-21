@@ -1,0 +1,11 @@
+{
+  "label": "Nest Application",
+  "position": 1,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "title": "Nest Application: обзор",
+    "description": "Контекст раздела из профильной документации: Function for sequential import of nestModules."
+  },
+  "key": "ru-tests/common/nest-application"
+}

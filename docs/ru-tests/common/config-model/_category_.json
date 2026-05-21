@@ -1,0 +1,11 @@
+{
+  "label": "Config Model",
+  "position": 1,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "title": "Config Model: обзор",
+    "description": "Контекст раздела из профильной документации: Decorators for describing the module configuration and a function for its serialization and validation."
+  },
+  "key": "ru-tests/common/config-model"
+}

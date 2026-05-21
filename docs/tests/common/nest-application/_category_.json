@@ -1,0 +1,11 @@
+{
+  "label": "Nest Application",
+  "position": 1,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "title": "Nest Application: overview",
+    "description": "Section context from focused docs: Function for sequential import of nestModules."
+  },
+  "key": "tests/common/nest-application"
+}

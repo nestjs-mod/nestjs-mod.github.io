@@ -1,0 +1,11 @@
+{
+  "label": "Example Basic",
+  "position": 1,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "title": "Example Basic: overview",
+    "description": "Section context from focused docs: git clone https://github.com/nestjs-mod/nestjs-mod.git"
+  },
+  "key": "tests/apps/example-basic"
+}
