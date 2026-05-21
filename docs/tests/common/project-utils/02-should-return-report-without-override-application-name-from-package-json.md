@@ -21,7 +21,7 @@ These tests validate nestjs-mod module architecture: module assembly via createN
 - We confirm correct lifecycle behavior in test environment: initialization, dependency readiness, and graceful shutdown of app/modules.
 ## GitHub Reference
 
-- **File**: [project-utils.module.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/main/libs/common/src/lib/modules/system/project-utils/project-utils.module.spec.ts#L58)
+- **File**: [project-utils.module.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/master/libs/common/src/lib/modules/system/project-utils/project-utils.module.spec.ts#L58)
 - **Line**: 58
 
 ## Setup Code
@@ -32,9 +32,6 @@ import { basename } from 'path';
 import { bootstrapNestApplication } from '../../../nest-application/utils';
 import { createNestModule } from '../../../nest-module/utils';
 import {
-  InfrastructureMarkdownReportGenerator,
-  InfrastructureMarkdownReportStorageService,
-} from '../../infrastructure/infrastructure-markdown-report/infrastructure-markdown-report';
 import { DefaultNestApplicationInitializer } from '../../system/default-nest-application/default-nest-application-initializer';
 import { DefaultNestApplicationListener } from '../../system/default-nest-application/default-nest-application-listener';
 import { ProjectUtils } from './project-utils.module';
@@ -51,39 +48,9 @@ describe('Project Utils', () => {
     process.env['NESTJS_MODE'] = undefined;
   });
 
-  it('should return report with application name from settings and source key with prefix for env', async () => {
-    const { AppModule } = createNestModule({
-      moduleName: 'AppModule',
-      // type checking
-      wrapForRootAsync: (asyncModuleOptions) => {
-        return { asyncModuleOptions };
-      },
-      wrapForFeatureAsync: (asyncModuleOptions) => {
-        return { asyncModuleOptions };
-      },
-    });
+  // full test in the block below
 
-    const app = await bootstrapNestApplication({
-      globalConfigurationOptions: { skipValidation: true },
-      globalEnvironmentsOptions: { skipValidation: true },
-      project: { name: 'TestApp', description: 'Test application' },
-      modules: {
-        system: [
-          DefaultNestApplicationInitializer.forRoot(),
-          DefaultNestApplicationListener.forRoot({ staticConfiguration: { mode: 'init' } }),
-        ],
-        feature: [AppModule.forRoot()],
-        infrastructure: [InfrastructureMarkdownReportGenerator.forRoot()],
-      },
-    });
-    const infrastructureMarkdownReportStorage = app.get(InfrastructureMarkdownReportStorageService);
-
-    expect(infrastructureMarkdownReportStorage.report).toContain('# TestApp');
-    expect(infrastructureMarkdownReportStorage.report).toContain('Test application');
-    expect(infrastructureMarkdownReportStorage.report).toContain("process.env['TEST_APP_PORT']");
-    expect(infrastructureMarkdownReportStorage.report).toContain("process.env['TEST_APP_HOSTNAME']");
-  });
-
+});
 ```
 
 ## Test Code
@@ -115,4 +82,41 @@ describe('Project Utils', () => {
                   prepare: (content: string) => {
                     const json = JSON.parse(content);
                     return JSON.stringify(
+                      json['version'] || new Date().toISOString().split(':').join('_').split('.').join('-'),
+                    );
+                  },
+                },
+                BASE_VERSION: {
+                  folders: [__dirname],
+                  glob: `**/*${basename(`${__filename}-package.json`)}`,
+                  prepare: (content: string) => {
+                    const json = JSON.parse(content);
+                    return JSON.stringify({
+                      devDependencies: json['devDependencies'] || {},
+                      dependencies: json['dependencies'] || {},
+                    });
+                  },
+                },
+              },
+              // todo: add tests
+              prepareProcessedFilesCheckSumToEnvironments: (p) => {
+                console.log(p);
+                return p;
+              },
+            },
+          }),
+          DefaultNestApplicationInitializer.forRoot(),
+          DefaultNestApplicationListener.forRoot({ staticConfiguration: { mode: 'init' } }),
+        ],
+        feature: [AppModule.forRoot()],
+        infrastructure: [InfrastructureMarkdownReportGenerator.forRoot()],
+      },
+    });
+    const infrastructureMarkdownReportStorage = app.get(InfrastructureMarkdownReportStorageService);
+
+    expect(infrastructureMarkdownReportStorage.report).toContain('# TestApp');
+    expect(infrastructureMarkdownReportStorage.report).toContain('Test application');
+    expect(infrastructureMarkdownReportStorage.report).toContain("process.env['TEST_APP_PORT']");
+    expect(infrastructureMarkdownReportStorage.report).toContain("process.env['TEST_APP_HOSTNAME']");
+  });
 ```

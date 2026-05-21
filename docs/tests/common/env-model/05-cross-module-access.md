@@ -20,7 +20,7 @@ These tests validate nestjs-mod EnvModel: environment variable reading, required
 
 ## GitHub Reference
 
-- **File**: [utils.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/main/libs/common/src/lib/env-model/utils.spec.ts#L195-L272)
+- **File**: [utils.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/master/libs/common/src/lib/env-model/utils.spec.ts#L195-L272)
 - **Lines**: 195-272
 
 ## Setup Code

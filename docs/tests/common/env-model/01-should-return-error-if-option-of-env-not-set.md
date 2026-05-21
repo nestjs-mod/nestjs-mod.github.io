@@ -20,7 +20,7 @@ These tests validate nestjs-mod EnvModel: environment variable reading, required
 - We explicitly validate the error contract: not only failure itself, but also error shape/content expected by module consumers.
 ## GitHub Reference
 
-- **File**: [utils.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/main/libs/common/src/lib/env-model/utils.spec.ts#L8)
+- **File**: [utils.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/master/libs/common/src/lib/env-model/utils.spec.ts#L8)
 - **Line**: 8
 
 ## Setup Code
@@ -33,6 +33,14 @@ import { EnvModel, EnvModelProperty } from './decorators';
 import { envTransform } from './utils';
 
 describe('Env model: Utils', () => {
+  // full test in the block below
+
+});
+```
+
+## Test Code
+
+```typescript
   it('should return error if option of env not set', async () => {
     @EnvModel()
     class AppEnv {
@@ -66,35 +74,10 @@ describe('Env model: Utils', () => {
       }
     }
 
-```
-
-## Test Code
-
-```typescript
-  it('should return error if option of env not set', async () => {
-    @EnvModel()
-    class AppEnv {
-      @EnvModelProperty()
-      @IsNotEmpty()
-      option!: string;
-    }
-
-    @Module({ providers: [AppEnv] })
-    class AppModule {
-      static forRoot(env: Partial<AppEnv>): DynamicModule {
-        return {
-          module: AppModule,
-          providers: [
-            {
-              provide: `${AppEnv.name}_loader`,
-              useFactory: async (emptyAppEnv: AppEnv) => {
-                if (env.constructor !== Object) {
-                  Object.setPrototypeOf(emptyAppEnv, env);
-                }
-                const obj = await envTransform({
-                  model: AppEnv,
-                  data: env,
-                });
-                Object.assign(emptyAppEnv, obj.data);
-              },
+    await expect(
+      Test.createTestingModule({
+        imports: [AppModule.forRoot({})],
+      }).compile(),
+    ).rejects.toHaveProperty('errors.0.constraints.isNotEmpty', 'option should not be empty');
+  });
 ```

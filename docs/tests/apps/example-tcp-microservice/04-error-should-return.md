@@ -23,18 +23,13 @@ These tests validate nestjs-mod TCP microservice logic: client/server interactio
 - We confirm correct lifecycle behavior in test environment: initialization, dependency readiness, and graceful shutdown of app/modules.
 ## GitHub Reference
 
-- **File**: [math-two-envs.controller.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/main/apps/example-tcp-microservice/src/app/math-two-envs.controller.spec.ts#L130)
+- **File**: [math-two-envs.controller.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/master/apps/example-tcp-microservice/src/app/math-two-envs.controller.spec.ts#L130)
 - **Line**: 130
 
 ## Setup Code
 
 ```typescript
 import {
-  DefaultNestApplicationInitializer,
-  DefaultNestApplicationListener,
-  bootstrapNestApplication,
-  createNestModule,
-} from '@nestjs-mod/common';
 import { TcpNestMicroservice, TcpNestMicroserviceClientModule } from '@nestjs-mod/microservices';
 import { TestingModule } from '@nestjs/testing';
 import { lastValueFrom } from 'rxjs';
@@ -125,39 +120,21 @@ describe('Math over TCP with two servers and use envs', () => {
   });
 
   describe('sum', () => {
-    it('should return "6"', async () => {
-      const mathClientService = client.get<MathTwoClientService>(MathTwoClientService);
-      const result = await lastValueFrom(mathClientService.sum([1, 2, 3]));
-      expect(result).toEqual(6);
-
-      expect(mathClientService.sumResult).toEqual([6]);
-      expect(mathController1.sumResult).toEqual([[1, 2, 3]]);
-      expect(mathController2.sumResult).toEqual([]);
-    });
-    it('should return "6" on server 2', async () => {
-      const mathClientService = client.get<MathTwoClientService>(MathTwoClientService);
-      const result = await lastValueFrom(mathClientService.sum2([1, 2, 3]));
-      expect(result).toEqual(6);
-
-      expect(mathClientService.sumResult).toEqual([6, 6]);
-      expect(mathController1.sumResult).toEqual([[1, 2, 3]]);
-      expect(mathController2.sumResult).toEqual([[1, 2, 3]]);
-    });
   });
 
   describe('getDate', () => {
-    it('error, should return "time.us.east"', async () => {
-      const mathClientService = client.get<MathTwoClientService>(MathTwoClientService);
-      try {
-        await lastValueFrom(mathClientService.getDate([1, 2, 3]));
-      } catch (error) {
-        expect(error).toEqual('There is no matching message handler defined in the remote service.');
-      }
+    // full test in the block below
+  });
 
-      expect(mathClientService.getDateResult).toEqual([]);
-      expect(mathController1.getDateResult).toEqual([]);
-      expect(mathController2.getDateResult).toEqual([]);
-    });
+  describe('asyncSum', () => {
+  });
+
+  describe('observableSum', () => {
+  });
+
+  describe('handleUserCreated', () => {
+  });
+});
 ```
 
 ## Test Code
@@ -175,18 +152,4 @@ describe('Math over TCP with two servers and use envs', () => {
       expect(mathController1.getDateResult).toEqual([]);
       expect(mathController2.getDateResult).toEqual([]);
     });
-  });
-
-  describe('asyncSum', () => {
-    it('should return "6"', async () => {
-      const mathClientService = client.get<MathTwoClientService>(MathTwoClientService);
-      const result = await lastValueFrom(mathClientService.asyncSum([1, 2, 3]));
-      expect(result).toEqual(6);
-
-      expect(mathClientService.asyncSumResult).toEqual([6]);
-      expect(mathController1.asyncSumResult).toEqual([[1, 2, 3]]);
-      expect(mathController2.asyncSumResult).toEqual([]);
-    });
-    it('should return "6" on server 2', async () => {
-      const mathClientService = client.get<MathTwoClientService>(MathTwoClientService);
 ```

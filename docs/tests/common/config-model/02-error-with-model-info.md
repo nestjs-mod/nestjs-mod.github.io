@@ -20,7 +20,7 @@ These tests validate nestjs-mod ConfigModel: configuration transformation, input
 
 ## GitHub Reference
 
-- **File**: [utils.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/main/libs/common/src/lib/config-model/utils.spec.ts#L50-L100)
+- **File**: [utils.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/master/libs/common/src/lib/config-model/utils.spec.ts#L50-L100)
 - **Lines**: 50-100
 
 ## Setup Code

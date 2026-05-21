@@ -21,7 +21,7 @@ These tests validate nestjs-mod module architecture: module assembly via createN
 
 ## GitHub Reference
 
-- **File**: [utils.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/main/libs/common/src/lib/nest-application/utils.spec.ts#L437-L572)
+- **File**: [utils.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/master/libs/common/src/lib/nest-application/utils.spec.ts#L437-L572)
 - **Lines**: 437-572
 
 ## Setup Code

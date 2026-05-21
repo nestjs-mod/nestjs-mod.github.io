@@ -23,18 +23,13 @@ These tests validate nestjs-mod TCP microservice logic: client/server interactio
 - We confirm correct lifecycle behavior in test environment: initialization, dependency readiness, and graceful shutdown of app/modules.
 ## GitHub Reference
 
-- **File**: [math.controller.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/main/apps/example-tcp-microservice/src/app/math.controller.spec.ts#L89)
+- **File**: [math.controller.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/master/apps/example-tcp-microservice/src/app/math.controller.spec.ts#L89)
 - **Line**: 89
 
 ## Setup Code
 
 ```typescript
 import {
-  DefaultNestApplicationInitializer,
-  DefaultNestApplicationListener,
-  bootstrapNestApplication,
-  createNestModule,
-} from '@nestjs-mod/common';
 import { TcpNestMicroservice } from '@nestjs-mod/microservices';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { TestingModule } from '@nestjs/testing';
@@ -106,17 +101,21 @@ describe('Math over TCP', () => {
   });
 
   describe('sum', () => {
-    it('should return "6"', async () => {
-      const mathClientService = client.get<MathClientService>(MathClientService);
-      const result = await lastValueFrom(mathClientService.sum([1, 2, 3]));
-      expect(result).toEqual(6);
-
-      expect(mathClientService.sumResult).toEqual([6]);
-      expect(mathController.sumResult).toEqual([[1, 2, 3]]);
-    });
   });
 
   describe('getDate', () => {
+    // full test in the block below
+  });
+
+  describe('asyncSum', () => {
+  });
+
+  describe('observableSum', () => {
+  });
+
+  describe('handleUserCreated', () => {
+  });
+});
 ```
 
 ## Test Code
@@ -133,19 +132,4 @@ describe('Math over TCP', () => {
       expect(mathClientService.getDateResult).toEqual([]);
       expect(mathController.getDateResult).toEqual([]);
     });
-  });
-
-  describe('asyncSum', () => {
-    it('should return "6"', async () => {
-      const mathClientService = client.get<MathClientService>(MathClientService);
-      const result = await lastValueFrom(mathClientService.asyncSum([1, 2, 3]));
-      expect(result).toEqual(6);
-
-      expect(mathClientService.asyncSumResult).toEqual([6]);
-      expect(mathController.asyncSumResult).toEqual([[1, 2, 3]]);
-    });
-  });
-
-  describe('observableSum', () => {
-    it('should return "54"', async () => {
 ```

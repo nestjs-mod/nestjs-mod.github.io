@@ -21,31 +21,27 @@ These tests validate nestjs-mod EnvModel: environment variable reading, required
 - We confirm correct lifecycle behavior in test environment: initialization, dependency readiness, and graceful shutdown of app/modules.
 ## GitHub Reference
 
-- **File**: [static-environments-model-with-boolean.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/main/apps/example-basic/src/app/static-environments-model/static-environments-model-with-boolean.spec.ts#L99)
+- **File**: [static-environments-model-with-boolean.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/master/apps/example-basic/src/app/static-environments-model/static-environments-model-with-boolean.spec.ts#L99)
 - **Line**: 99
 
 ## Setup Code
 
 ```typescript
 import {
-  BooleanTransformer,
-  ConfigModel,
-  ConfigModelProperty,
-  EnvModel,
-  EnvModelProperty,
-  NestModuleCategory,
-  PACKAGE_JSON_FILE,
-  PROJECT_JSON_FILE,
-  ProjectUtils,
-  bootstrapNestApplication,
-  createNestModule,
-  getFeatureDotEnvPropertyNameFormatter,
-} from '@nestjs-mod/common';
 import { DefaultTestNestApplicationCreate, DefaultTestNestApplicationInitializer } from '@nestjs-mod/testing';
 import { join } from 'path';
 
 describe('staticEnvironmentsModel', () => {
-  it('set env value and config value from forRoot', async () => {
+
+  // full test in the block below
+
+});
+```
+
+## Test Code
+
+```typescript
+  it('set env value from process.env and config value with default value', async () => {
     const WEBHOOK_MODULE = 'WebhookModule';
     const WEBHOOK_ENV_PREFIX = 'webhook';
 
@@ -96,7 +92,7 @@ describe('staticEnvironmentsModel', () => {
       },
     });
 
-    process.env['SERVER_WEBHOOK_USE_GUARDS'] = null as unknown as string;
+    process.env['SERVER_WEBHOOK_USE_GUARDS'] = 'false';
 
     await bootstrapNestApplication({
       modules: {
@@ -112,48 +108,11 @@ describe('staticEnvironmentsModel', () => {
           DefaultTestNestApplicationCreate.forRoot(),
           DefaultTestNestApplicationInitializer.forRoot(),
         ],
-        feature: [
-          WebhookModule.forRoot({
-            staticEnvironments: { useGuards: false },
-            staticConfiguration: { usePipes: false },
-          }),
-        ],
+        feature: [WebhookModule.forRoot()],
       },
     });
 
     expect(useGuardsFromEnv).toEqual(false);
-    expect(usePipesFromConfig).toEqual(false);
+    expect(usePipesFromConfig).toEqual(true);
   });
-
-```
-
-## Test Code
-
-```typescript
-  it('set env value from process.env and config value with default value', async () => {
-    const WEBHOOK_MODULE = 'WebhookModule';
-    const WEBHOOK_ENV_PREFIX = 'webhook';
-
-    let useGuardsFromEnv: boolean | undefined | null = undefined;
-    let usePipesFromConfig: boolean | undefined | null = undefined;
-
-    @EnvModel()
-    class WebhookEnvironments {
-      @EnvModelProperty({
-        description: 'Use guards',
-        default: 'true',
-        transform: new BooleanTransformer(),
-      })
-      useGuards?: boolean | null;
-    }
-
-    @ConfigModel()
-    class WebhookConfiguration {
-      @ConfigModelProperty({
-        description: 'Use pipes',
-        default: true,
-      })
-      usePipes?: boolean | null;
-    }
-
 ```

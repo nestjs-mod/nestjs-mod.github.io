@@ -21,7 +21,7 @@ These tests validate nestjs-mod EnvModel: environment variable reading, required
 - We confirm correct lifecycle behavior in test environment: initialization, dependency readiness, and graceful shutdown of app/modules.
 ## GitHub Reference
 
-- **File**: [utils.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/main/libs/common/src/lib/nest-application/utils.spec.ts#L40)
+- **File**: [utils.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/master/libs/common/src/lib/nest-application/utils.spec.ts#L40)
 - **Line**: 40
 
 ## Setup Code
@@ -33,10 +33,6 @@ import { IsNotEmpty } from 'class-validator';
 import { ConfigModel, ConfigModelProperty } from '../config-model/decorators';
 import { EnvModel, EnvModelProperty } from '../env-model/decorators';
 import {
-  InfrastructureMarkdownReportGenerator,
-  InfrastructureMarkdownReportStorage,
-  InfrastructureMarkdownReportStorageService,
-} from '../modules/infrastructure/infrastructure-markdown-report/infrastructure-markdown-report';
 import { DefaultNestApplicationInitializer } from '../modules/system/default-nest-application/default-nest-application-initializer';
 import { DefaultNestApplicationListener } from '../modules/system/default-nest-application/default-nest-application-listener';
 import { InjectableFeatureConfigurationType } from '../nest-module/types';
@@ -66,7 +62,20 @@ describe('NestJS application: Utils', () => {
   });
 
   describe('NestJS application with env model', () => {
-    it('should return error if option of env not set', async () => {
+    // full test in the block below
+
+  });
+
+  describe('NestJS application with config model', () => {
+
+  });
+  describe('NestJS application with anv and config model', () => {
+  });
+  describe('NestJS application with multi-providing options', () => {
+  });
+  describe('NestJS application get markdown of infrastructure', () => {
+  });
+});
 ```
 
 ## Test Code
@@ -95,7 +104,4 @@ describe('NestJS application: Utils', () => {
 
       expect(exitStatus).toEqual(1);
     });
-
-    it('should return option value from service', async () => {
-      @EnvModel()
 ```

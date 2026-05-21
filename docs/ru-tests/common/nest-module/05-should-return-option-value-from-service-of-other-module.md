@@ -20,7 +20,7 @@ description: "Контекст тестового раздела: Тесты п�
 - Отдельно проверяем контракт ошибок: не только факт падения, но и содержание/тип ошибки, важные для потребителей модуля.
 ## Ссылка на GitHub
 
-- **Файл**: [utils.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/main/libs/common/src/lib/nest-module/utils.spec.ts#L132)
+- **Файл**: [utils.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/master/libs/common/src/lib/nest-module/utils.spec.ts#L132)
 - **Строка**: 132
 
 ## Подготовительный код
@@ -38,125 +38,24 @@ import { createNestModule, getNestModuleDecorators } from './utils';
 
 describe('NestJS modules: Utils', () => {
   describe('NestJS modules with env model', () => {
-    it('should return error if option of env not set', async () => {
-      @EnvModel()
-      class AppEnv {
-        @EnvModelProperty()
-        @IsNotEmpty()
-        option!: string;
-      }
 
-      const { AppModule } = createNestModule({
-        moduleName: 'AppModule',
-        environmentsModel: AppEnv,
-      });
+    // полный тест в блоке ниже
+  });
 
-      await expect(
-        Test.createTestingModule({
-          imports: [AppModule.forRoot({})],
-        }).compile(),
-      ).rejects.toHaveProperty('errors.0.constraints.isNotEmpty', 'option should not be empty');
-    });
+  describe('NestJS modules with config model', () => {
 
-    it('should return model info in error if option of env not set', async () => {
-      @EnvModel({ name: 'model name', description: 'model description' })
-      class AppEnv {
-        @EnvModelProperty({ description: 'option description' })
-        @IsNotEmpty()
-        option!: string;
-      }
+  });
+  describe('NestJS modules with anv and config model', () => {
+  });
+  describe('NestJS modules with multi-providing options', () => {
+  });
+  describe('NestJS modules with useObservable (configurationStream)', () => {
+  });
 
-      const { AppModule } = createNestModule({
-        moduleName: 'AppModule',
-        environmentsModel: AppEnv,
-      });
+  describe('NestJS modules with featureConfigurationClass', () => {
 
-      await expect(
-        Test.createTestingModule({
-          imports: [AppModule.forRoot({})],
-        }).compile(),
-      ).rejects.toMatchObject({
-        info: {
-          modelPropertyOptions: [{ description: 'option description', originalName: 'option' }],
-          modelOptions: {
-            name: 'model name',
-            description: 'model description',
-            originalName: 'AppEnv',
-          },
-          validations: {
-            option: {
-              constraints: { isNotEmpty: 'option should not be empty' },
-            },
-          },
-        },
-      });
-    });
-
-    it('should return option value from service use env', async () => {
-      @EnvModel()
-      class AppEnv {
-        @EnvModelProperty()
-        @IsNotEmpty()
-        option!: string;
-      }
-
-      @Injectable()
-      class AppService {
-        constructor(private readonly appEnv: AppEnv) {}
-
-        getEnv() {
-          return this.appEnv;
-        }
-      }
-
-      const { AppModule } = createNestModule({
-        moduleName: 'AppModule',
-        environmentsModel: AppEnv,
-        providers: [AppService],
-      });
-
-      process.env['OPTION'] = 'value1';
-
-      const moduleRef: TestingModule = await Test.createTestingModule({
-        imports: [AppModule.forRoot({})],
-      }).compile();
-      const appService = moduleRef.get(AppService);
-
-      expect(appService.getEnv()).toMatchObject({ option: 'value1' });
-    });
-    it('should return option value from service use env and contextName', async () => {
-      @EnvModel()
-      class AppEnv {
-        @EnvModelProperty()
-        @IsNotEmpty()
-        option!: string;
-      }
-
-      @Injectable()
-      class AppService {
-        constructor(private readonly appEnv: AppEnv) {}
-
-        getEnv() {
-          return this.appEnv;
-        }
-      }
-
-      const { AppModule } = createNestModule({
-        moduleName: 'AppModule',
-        environmentsModel: AppEnv,
-        providers: [AppService],
-      });
-
-      process.env['CTX_OPTION'] = 'value1';
-
-      const moduleRef: TestingModule = await Test.createTestingModule({
-        imports: [AppModule.forRoot({ contextName: 'CTX' })],
-      }).compile();
-      const appService = moduleRef.get(AppService);
-
-      expect(appService.getEnv()).toMatchObject({ option: 'value1' });
-    });
-
+  });
+});
 ```
 
 ## Код теста
@@ -188,4 +87,25 @@ describe('NestJS modules: Utils', () => {
       @Injectable()
       class App2Service {
         constructor(private readonly appService: App1Service) {}
+
+        getEnv() {
+          return this.appService.getEnv();
+        }
+      }
+
+      @Module({
+        imports: [App1Module.forFeature()],
+        providers: [App2Service],
+      })
+      class App2Module {}
+
+      process.env['OPTION'] = 'value1';
+
+      const moduleRef: TestingModule = await Test.createTestingModule({
+        imports: [App1Module.forRoot({}), App2Module],
+      }).compile();
+      const app2Service = moduleRef.get(App2Service);
+
+      expect(app2Service.getEnv()).toMatchObject({ option: 'value1' });
+    });
 ```

@@ -21,7 +21,7 @@ description: "Контекст тестового раздела: Тесты п�
 - Подтверждаем корректный lifecycle в тестовом окружении: инициализация, готовность зависимостей и штатное завершение приложения/модулей.
 ## Ссылка на GitHub
 
-- **Файл**: [project-utils.module.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/main/libs/common/src/lib/modules/system/project-utils/project-utils.module.spec.ts#L122)
+- **Файл**: [project-utils.module.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/master/libs/common/src/lib/modules/system/project-utils/project-utils.module.spec.ts#L122)
 - **Строка**: 122
 
 ## Подготовительный код
@@ -32,9 +32,6 @@ import { basename } from 'path';
 import { bootstrapNestApplication } from '../../../nest-application/utils';
 import { createNestModule } from '../../../nest-module/utils';
 import {
-  InfrastructureMarkdownReportGenerator,
-  InfrastructureMarkdownReportStorageService,
-} from '../../infrastructure/infrastructure-markdown-report/infrastructure-markdown-report';
 import { DefaultNestApplicationInitializer } from '../../system/default-nest-application/default-nest-application-initializer';
 import { DefaultNestApplicationListener } from '../../system/default-nest-application/default-nest-application-listener';
 import { ProjectUtils } from './project-utils.module';
@@ -51,103 +48,9 @@ describe('Project Utils', () => {
     process.env['NESTJS_MODE'] = undefined;
   });
 
-  it('should return report with application name from settings and source key with prefix for env', async () => {
-    const { AppModule } = createNestModule({
-      moduleName: 'AppModule',
-      // type checking
-      wrapForRootAsync: (asyncModuleOptions) => {
-        return { asyncModuleOptions };
-      },
-      wrapForFeatureAsync: (asyncModuleOptions) => {
-        return { asyncModuleOptions };
-      },
-    });
+  // полный тест в блоке ниже
 
-    const app = await bootstrapNestApplication({
-      globalConfigurationOptions: { skipValidation: true },
-      globalEnvironmentsOptions: { skipValidation: true },
-      project: { name: 'TestApp', description: 'Test application' },
-      modules: {
-        system: [
-          DefaultNestApplicationInitializer.forRoot(),
-          DefaultNestApplicationListener.forRoot({ staticConfiguration: { mode: 'init' } }),
-        ],
-        feature: [AppModule.forRoot()],
-        infrastructure: [InfrastructureMarkdownReportGenerator.forRoot()],
-      },
-    });
-    const infrastructureMarkdownReportStorage = app.get(InfrastructureMarkdownReportStorageService);
-
-    expect(infrastructureMarkdownReportStorage.report).toContain('# TestApp');
-    expect(infrastructureMarkdownReportStorage.report).toContain('Test application');
-    expect(infrastructureMarkdownReportStorage.report).toContain("process.env['TEST_APP_PORT']");
-    expect(infrastructureMarkdownReportStorage.report).toContain("process.env['TEST_APP_HOSTNAME']");
-  });
-
-  it('should return report without override application name from package.json', async () => {
-    const { AppModule } = createNestModule({
-      moduleName: 'AppModule',
-    });
-
-    const app = await bootstrapNestApplication({
-      globalConfigurationOptions: { skipValidation: true, debug: true },
-      globalEnvironmentsOptions: { skipValidation: true, debug: true },
-      project: { name: 'TestApp', description: 'Test application' },
-      modules: {
-        system: [
-          ProjectUtils.forRoot({
-            staticConfiguration: {
-              updateEnvFile: true,
-              // todo: add tests
-              saveFilesWithCheckSum: true,
-              applicationPackageJsonFile: `${__filename}-package.json`,
-              envFile: `${__filename}-2-test.env`,
-              // todo: add tests
-              filesCheckSumToEnvironments: {
-                VERSION: {
-                  folders: [__dirname],
-                  glob: `**/*${basename(`${__filename}-package.json`)}`,
-                  prepare: (content: string) => {
-                    const json = JSON.parse(content);
-                    return JSON.stringify(
-                      json['version'] || new Date().toISOString().split(':').join('_').split('.').join('-'),
-                    );
-                  },
-                },
-                BASE_VERSION: {
-                  folders: [__dirname],
-                  glob: `**/*${basename(`${__filename}-package.json`)}`,
-                  prepare: (content: string) => {
-                    const json = JSON.parse(content);
-                    return JSON.stringify({
-                      devDependencies: json['devDependencies'] || {},
-                      dependencies: json['dependencies'] || {},
-                    });
-                  },
-                },
-              },
-              // todo: add tests
-              prepareProcessedFilesCheckSumToEnvironments: (p) => {
-                console.log(p);
-                return p;
-              },
-            },
-          }),
-          DefaultNestApplicationInitializer.forRoot(),
-          DefaultNestApplicationListener.forRoot({ staticConfiguration: { mode: 'init' } }),
-        ],
-        feature: [AppModule.forRoot()],
-        infrastructure: [InfrastructureMarkdownReportGenerator.forRoot()],
-      },
-    });
-    const infrastructureMarkdownReportStorage = app.get(InfrastructureMarkdownReportStorageService);
-
-    expect(infrastructureMarkdownReportStorage.report).toContain('# TestApp');
-    expect(infrastructureMarkdownReportStorage.report).toContain('Test application');
-    expect(infrastructureMarkdownReportStorage.report).toContain("process.env['TEST_APP_PORT']");
-    expect(infrastructureMarkdownReportStorage.report).toContain("process.env['TEST_APP_HOSTNAME']");
-  });
-
+});
 ```
 
 ## Код теста
@@ -178,5 +81,8 @@ describe('Project Utils', () => {
     expect(infrastructureMarkdownReportStorage.report).toContain("process.env['TEST_APP_PORT']");
     expect(infrastructureMarkdownReportStorage.report).toContain("process.env['TEST_APP_HOSTNAME']");
     expect(infrastructureMarkdownReportStorage.report).toContain('```1000```');
+    process.env['TEST_APP_PORT'] = undefined;
+  });
+```1000```');
     process.env['TEST_APP_PORT'] = undefined;
 ```

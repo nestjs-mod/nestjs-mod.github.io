@@ -20,7 +20,7 @@ These tests validate nestjs-mod ConfigModel: configuration transformation, input
 - We explicitly validate the error contract: not only failure itself, but also error shape/content expected by module consumers.
 ## GitHub Reference
 
-- **File**: [utils.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/main/libs/common/src/lib/config-model/utils.spec.ts#L50)
+- **File**: [utils.spec.ts](https://github.com/nestjs-mod/nestjs-mod/blob/master/libs/common/src/lib/config-model/utils.spec.ts#L50)
 - **Line**: 50
 
 ## Setup Code
@@ -35,10 +35,19 @@ import { ConfigModel, ConfigModelProperty } from './decorators';
 import { configTransform } from './utils';
 
 describe('Config model: Utils', () => {
-  it('should return error if option of config not set', async () => {
-    @ConfigModel()
+
+  // full test in the block below
+
+});
+```
+
+## Test Code
+
+```typescript
+  it('should return model info in error if option of config not set', async () => {
+    @ConfigModel({ name: 'model name', description: 'model description' })
     class AppConfig {
-      @ConfigModelProperty()
+      @ConfigModelProperty({ description: 'option description' })
       @IsNotEmpty()
       option!: string;
     }
@@ -72,38 +81,18 @@ describe('Config model: Utils', () => {
       Test.createTestingModule({
         imports: [AppModule.forRoot({})],
       }).compile(),
-    ).rejects.toHaveProperty('errors.0.constraints.isNotEmpty', 'option should not be empty');
+    ).rejects.toMatchObject({
+      info: {
+        modelPropertyOptions: [{ description: 'option description', originalName: 'option' }],
+        modelOptions: {
+          name: 'model name',
+          description: 'model description',
+          originalName: 'AppConfig',
+        },
+        validations: {
+          option: { constraints: { isNotEmpty: 'option should not be empty' } },
+        },
+      },
+    });
   });
-
-```
-
-## Test Code
-
-```typescript
-  it('should return model info in error if option of config not set', async () => {
-    @ConfigModel({ name: 'model name', description: 'model description' })
-    class AppConfig {
-      @ConfigModelProperty({ description: 'option description' })
-      @IsNotEmpty()
-      option!: string;
-    }
-
-    @Module({ providers: [AppConfig] })
-    class AppModule {
-      static forRoot(config: Partial<AppConfig>): DynamicModule {
-        return {
-          module: AppModule,
-          providers: [
-            {
-              provide: `${AppConfig.name}_loader`,
-              useFactory: async (emptyAppConfig: AppConfig) => {
-                if (config.constructor !== Object) {
-                  Object.setPrototypeOf(emptyAppConfig, config);
-                }
-                const obj = await configTransform({
-                  model: AppConfig,
-                  data: config,
-                });
-                Object.assign(emptyAppConfig, obj.data);
-              },
 ```
